@@ -1,8 +1,19 @@
-# Estoque Roupas App
+#  Estoque Roupas App
 
-Aplicativo mobile desenvolvido para controle de estoque de loja de roupas.
+Aplicativo mobile desenvolvido para gerenciamento de estoque de loja de roupas, utilizando React Native, Expo, TypeScript e SQLite.
 
-## Tecnologias
+##  Funcionalidades
+
+- Cadastro de produtos
+- Edição de produtos
+- Exclusão de produtos
+- Controle de entrada de estoque
+- Controle de saída de estoque
+- Histórico de movimentações
+- Dashboard gerencial
+- Persistência local com SQLite
+
+##  Tecnologias Utilizadas
 
 - React Native
 - Expo
@@ -10,48 +21,37 @@ Aplicativo mobile desenvolvido para controle de estoque de loja de roupas.
 - SQLite
 - Expo Router
 
-## Funcionalidades
+##  Screenshots
 
-- Cadastro de produtos
-- Controle de estoque
-- Entrada e saída de produtos
-- Histórico de movimentações
-- Dashboard gerencial
-- Persistência local de dados
+### Cadastro de Produtos
 
-# 📱 Screenshots
+![Cadastro](screenshots/cadastrodeprodutos.jpeg)
 
-## Cadastro de Produtos
+### Estoque
 
-![Cadastro]<p align="left">
-  <img src="screenshots/cadastrodeprodutos.jpeg" width="220">
-  </p>
+![Estoque](screenshots/estoque.jpeg)
 
-## Estoque
+### Histórico
 
-![Estoque]<p align="left">
-  <img src="screenshots/estoque.jpeg" width="220">
-  </p>
+![Histórico](screenshots/historico.jpeg)
 
-## Histórico
+### Dashboard
 
-![Histórico]<p align="left">
-  <img src="screenshots/historico.jpeg" width="220">
-  </p>
+![Dashboard](screenshots/dashboard.jpeg)
 
-## Dashboard
+##  Objetivo do Projeto
 
-![Dashboard]<p align="left">
-  <img src="screenshots/dashboard.jpeg" width="220">
-  </p>
+Este projeto foi desenvolvido para praticar desenvolvimento mobile e criar uma solução real para controle de estoque de uma loja de roupas.
 
-## Autor
+##  Autor
 
-## Guilherme Bomfim Ribeiro
+### Guilherme Bomfim Ribeiro
 
 Estudante de Análise e Desenvolvimento de Sistemas.
 
 - GitHub: https://github.com/GuiH666
-- LinkedIn:(https://www.linkedin.com/in/guilherme-bomfim-ribeiro-2623aa218/)
+- LinkedIn: https://www.linkedin.com/in/guilherme-bomfim-ribeiro-2623aa218/
 
----
+##  Licença
+
+Projeto desenvolvido para fins de estudo e portfólio.
