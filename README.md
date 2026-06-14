@@ -1,8 +1,8 @@
 # Estoque Roupas App
 
-Aplicativo mobile desenvolvido para controle de estoque de uma loja de roupas.
+Aplicativo mobile desenvolvido para controle de estoque de loja de roupas.
 
-## Tecnologias utilizadas
+## Tecnologias
 
 - React Native
 - Expo
@@ -13,24 +13,16 @@ Aplicativo mobile desenvolvido para controle de estoque de uma loja de roupas.
 ## Funcionalidades
 
 - Cadastro de produtos
-- Edição de produtos
-- Exclusão de produtos
-- Entrada e saída de estoque
+- Controle de estoque
+- Entrada e saída de produtos
 - Histórico de movimentações
-- Dashboard com indicadores
-- Pesquisa de produtos
-- Filtro por categorias
-- Persistência local com SQLite
+- Dashboard gerencial
+- Persistência local de dados
 
-## Telas do aplicativo
+## Screenshots
 
-- Cadastro de produtos
-- Estoque
-- Histórico
-- Dashboard
+(Adicionar imagens do aplicativo)
 
-## Como executar o projeto
+## Autor
 
-```bash
-npm install
-npx expo start
+Guilherme Bomfim Ribeiro
