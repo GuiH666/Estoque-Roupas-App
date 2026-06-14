@@ -23,27 +23,27 @@ Aplicativo mobile desenvolvido para controle de estoque de loja de roupas.
 
 ## Cadastro de Produtos
 
-![Cadastro](screenshots/cadastrodeprodutos.png)
+![Cadastro](screenshots/cadastrodeprodutos.jpeg)
 
 ## Estoque
 
-![Estoque](screenshots/estoque.png)
+![Estoque](screenshots/estoque.jpeg)
 
 ## Histórico
 
-![Histórico](screenshots/historico.png)
+![Histórico](screenshots/historico.jpeg)
 
 ## Dashboard
 
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/dashboard.jpeg)
 
 ## 📱 Telas
 
 <p align="center">
-  <img src="screenshots/cadastrodeprodutos.png" width="220">
-  <img src="screenshots/estoque.png" width="220">
-  <img src="screenshots/historico.png" width="220">
-  <img src="screenshots/dashboard.png" width="220">
+  <img src="screenshots/cadastrodeprodutos.jpeg" width="220">
+  <img src="screenshots/estoque.jpeg" width="220">
+  <img src="screenshots/historico.jpeg" width="220">
+  <img src="screenshots/dashboard.jpeg" width="220">
 </p>
 
 ## Autor
