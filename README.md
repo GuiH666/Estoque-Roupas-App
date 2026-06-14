@@ -19,9 +19,23 @@ Aplicativo mobile desenvolvido para controle de estoque de loja de roupas.
 - Dashboard gerencial
 - Persistência local de dados
 
-## Screenshots
+# 📱 Screenshots
 
-(Adicionar imagens do aplicativo)
+## Cadastro de Produtos
+
+![Cadastro](screenshots/cadastrodeprodutos.png)
+
+## Estoque
+
+![Estoque](screenshots/estoque.png)
+
+## Histórico
+
+![Histórico](screenshots/historico.png)
+
+## Dashboard
+
+![Dashboard](screenshots/dashboard.png)
 
 ## Autor
 
