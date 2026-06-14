@@ -25,4 +25,11 @@ Aplicativo mobile desenvolvido para controle de estoque de loja de roupas.
 
 ## Autor
 
-Guilherme Bomfim Ribeiro
+## Guilherme Bomfim Ribeiro
+
+Estudante de Análise e Desenvolvimento de Sistemas.
+
+- GitHub: https://github.com/GuiH666
+- LinkedIn: (adicione seu LinkedIn aqui)
+
+---
