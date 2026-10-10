@@ -1,29 +1,54 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "expo-router/react-navigation";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import "react-native-reanimated";
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { COLORS } from "../src/theme/colors";
 
 export const unstable_settings = {
-  anchor: '(tabs)',
+  anchor: "(tabs)",
+};
+
+/** Tema de navegação alinhado com as cores do app (evita "piscar" branco). */
+const TemaDoApp = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    primary: COLORS.primary,
+    background: COLORS.background,
+    card: COLORS.surface,
+    text: COLORS.text,
+    border: COLORS.borderSoft,
+    notification: COLORS.thread,
+  },
 };
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+    <ThemeProvider value={TemaDoApp}>
+      <Stack
+        screenOptions={{
+          contentStyle: { backgroundColor: COLORS.background },
+        }}
+      >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+
+        {/* Cadastro e edição de produto: abre como folha por cima das abas */}
+        <Stack.Screen
+          name="produto"
+          options={{
+            headerShown: false,
+            presentation: "modal",
+            animation: "slide_from_bottom",
+          }}
+        />
       </Stack>
-      <StatusBar style="auto" />
+
+      <StatusBar style="light" />
     </ThemeProvider>
   );
-
-  
-  
 }
-
-

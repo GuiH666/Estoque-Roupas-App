@@ -1,56 +1,25 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import React from "react";
+import { Tabs } from "expo-router";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import TabBar from "../../src/components/TabBar";
+import { COLORS } from "../../src/theme/colors";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
+      tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
+        sceneStyle: { backgroundColor: COLORS.background },
+      }}
+    >
+      <Tabs.Screen name="index" options={{ title: "Início" }} />
+      <Tabs.Screen name="estoque" options={{ title: "Estoque" }} />
+      <Tabs.Screen name="historico" options={{ title: "Histórico" }} />
+      <Tabs.Screen name="dashboard" options={{ title: "Dashboard" }} />
 
-        <Tabs.Screen
-    name="estoque"
-    options={{
-      title: "Estoque",
-    }}
-
-    
-    
-  />
-
-    
-
-      <Tabs.Screen
-  name="historico"
-  options={{
-    title: "Histórico",
-  }}
-/>
-
-<Tabs.Screen
-  name="dashboard"
-  options={{
-    title: "Dashboard",
-  }}
-/>
+      {/* Sobra do modelo do Expo: continua escondida */}
+      <Tabs.Screen name="explore" options={{ href: null }} />
     </Tabs>
-
-    
   );
 }

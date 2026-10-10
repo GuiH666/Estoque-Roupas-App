@@ -28,12 +28,12 @@ export function registrarMovimentacao(
   );
 }
 
-export function listarMovimentacoes() {
+export function listarMovimentacoes(): Movimentacao[] {
   return db.getAllSync(
     `
     SELECT *
     FROM movimentacoes
     ORDER BY id DESC
     `
-  );
+  ) as Movimentacao[];
 }
