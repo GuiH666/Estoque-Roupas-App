@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
 
   rotulo: {
-    fontSize: 11,
+    fontSize: 10.5,
     fontWeight: "700",
     color: COLORS.textMuted,
   },
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
 
   centro: {
-    width: 76,
+    width: 64,
     height: 56,
     alignItems: "center",
     justifyContent: "center",

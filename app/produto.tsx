@@ -374,7 +374,7 @@ export default function ProdutoScreen() {
           {editando ? "Editar produto" : "Novo produto"}
         </Text>
 
-        <View style={styles.botaoFechar} />
+        <View style={styles.espacador} />
       </View>
 
       <ScrollView
@@ -782,6 +782,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  espacador: {
+    width: 44,
+    height: 44,
   },
 
   barraTitulo: {

@@ -146,7 +146,7 @@ export default function HistoricoScreen() {
                     />
                   </View>
 
-                  <View>
+                  <View style={styles.resumoTextos}>
                     <Text style={[styles.resumoNumero, { color: COLORS.success }]}>
                       {formatarInteiro(totais.qtdEntradas)}
                     </Text>
@@ -170,7 +170,7 @@ export default function HistoricoScreen() {
                     />
                   </View>
 
-                  <View>
+                  <View style={styles.resumoTextos}>
                     <Text style={[styles.resumoNumero, { color: COLORS.danger }]}>
                       {formatarInteiro(totais.qtdSaidas)}
                     </Text>
@@ -353,13 +353,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: 10,
+  },
+
+  resumoTextos: {
+    flex: 1,
   },
 
   resumoIcone: {
-    width: 38,
-    height: 38,
-    borderRadius: 12,
+    width: 34,
+    height: 34,
+    borderRadius: 11,
     alignItems: "center",
     justifyContent: "center",
   },

@@ -146,7 +146,10 @@ export function rotuloDoDia(info: DataMovimentacao, hoje = new Date()): string {
     MESES[info.data.getMonth()]
   }`;
 
-  return info.data.getFullYear() === hoje.getFullYear()
-    ? base
-    : `${base} de ${info.data.getFullYear()}`;
+  const completo =
+    info.data.getFullYear() === hoje.getFullYear()
+      ? base
+      : `${base} de ${info.data.getFullYear()}`;
+
+  return completo.charAt(0).toUpperCase() + completo.slice(1);
 }

@@ -246,6 +246,7 @@ export default function HomeScreen() {
                 />
                 <View style={styles.numeroLinha} />
                 <Numero
+                  largo
                   valor={formatarMoeda(resumo.precoMedio)}
                   rotulo="Preço médio"
                 />
@@ -315,7 +316,7 @@ export default function HomeScreen() {
 
             {/* Movimentações recentes */}
             <SecaoTitulo
-              titulo="Movimentações recentes"
+              titulo="Movimentações"
               acao={recentes.length > 0 ? "Ver histórico" : undefined}
               onAcao={() => router.push("/historico")}
             />
@@ -402,9 +403,17 @@ function Legenda({ cor, texto }: { cor: string; texto: string }) {
   );
 }
 
-function Numero({ valor, rotulo }: { valor: string; rotulo: string }) {
+function Numero({
+  valor,
+  rotulo,
+  largo,
+}: {
+  valor: string;
+  rotulo: string;
+  largo?: boolean;
+}) {
   return (
-    <View style={styles.numero}>
+    <View style={[styles.numero, largo && styles.numeroLargo]}>
       <Text
         style={styles.numeroValor}
         numberOfLines={1}
@@ -541,6 +550,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
 
+  numeroLargo: {
+    flex: 1.6,
+  },
+
   numeroValor: {
     color: COLORS.text,
     fontSize: 19,
@@ -631,6 +644,8 @@ const styles = StyleSheet.create({
 
   secaoTitulo: {
     ...TYPE.heading,
+    flexShrink: 1,
+    marginRight: 12,
   },
 
   secaoAcao: {

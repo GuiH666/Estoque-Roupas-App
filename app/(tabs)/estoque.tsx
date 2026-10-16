@@ -221,7 +221,7 @@ export default function EstoqueScreen() {
 
                     <TextInput
                       style={styles.pesquisaInput}
-                      placeholder="Buscar por nome, cor ou tamanho"
+                      placeholder="Buscar produto, cor ou tamanho"
                       placeholderTextColor={COLORS.textMuted}
                       selectionColor={COLORS.primaryLight}
                       value={pesquisa}

@@ -1,7 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
 import { COLORS } from "../../theme/colors";
 import { GUTTER, TYPE } from "../../theme/tokens";
 
@@ -24,10 +22,8 @@ export default function ScreenHeader({
   acima,
   direita,
 }: Props) {
-  const insets = useSafeAreaInsets();
-
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 14 }]}>
+    <View style={styles.container}>
       <View style={styles.textos}>
         {acima ? <Text style={styles.acima}>{acima}</Text> : null}
 
@@ -49,6 +45,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "space-between",
     paddingHorizontal: GUTTER,
+    paddingTop: 14,
     paddingBottom: 18,
   },
 

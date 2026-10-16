@@ -55,7 +55,7 @@ export default function ProdutoCard({
         <Costura raio={11} inset={3} />
 
         {tamanhoCurto ? (
-          <Text style={styles.etiquetaTexto}>{tamanho}</Text>
+          <Text style={styles.etiquetaTexto}>{tamanho.toUpperCase()}</Text>
         ) : (
           <Ionicons name="shirt-outline" size={22} color={COLORS.primaryLight} />
         )}
@@ -63,7 +63,7 @@ export default function ProdutoCard({
 
       {/* Informações */}
       <View style={styles.centro}>
-        <Text style={styles.nome} numberOfLines={1}>
+        <Text style={styles.nome} numberOfLines={2}>
           {produto.nome}
         </Text>
 
@@ -174,12 +174,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 12,
     marginBottom: 10,
-    gap: 12,
+    gap: 10,
   },
 
   etiqueta: {
-    width: 54,
-    height: 54,
+    width: 50,
+    height: 50,
     borderRadius: 14,
     backgroundColor: COLORS.surfaceSecondary,
     alignItems: "center",
@@ -250,9 +250,9 @@ const styles = StyleSheet.create({
   },
 
   botaoStep: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
   },
 
   qtd: {
-    minWidth: 28,
+    minWidth: 24,
     textAlign: "center",
     color: COLORS.text,
     fontSize: 16,
