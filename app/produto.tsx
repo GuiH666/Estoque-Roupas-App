@@ -343,6 +343,14 @@ export default function ProdutoScreen() {
     );
   }
 
+  /** Leva o campo para a parte de cima da tela, longe do teclado. */
+  function rolarPara(campo: CampoComErro) {
+    setTimeout(() => {
+      const y = posicoes.current[campo] ?? 0;
+      scrollRef.current?.scrollTo({ y: Math.max(0, y - 24), animated: true });
+    }, 280);
+  }
+
   function guardarPosicao(campo: CampoComErro) {
     return (e: LayoutChangeEvent) => {
       posicoes.current[campo] = e.nativeEvent.layout.y;
@@ -354,10 +362,9 @@ export default function ProdutoScreen() {
   const topo = Platform.OS === "ios" ? 14 : insets.top + 8;
 
   return (
-    <KeyboardAvoidingView
-      style={styles.tela}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-    >
+    // "padding" nas duas plataformas: no Android atual a tela vai de ponta a
+    // ponta e o sistema não redimensiona sozinho quando o teclado abre.
+    <KeyboardAvoidingView style={styles.tela} behavior="padding">
       {/* Barra superior */}
       <View style={[styles.barra, { paddingTop: topo }]}>
         <PressableScale
@@ -380,7 +387,10 @@ export default function ProdutoScreen() {
       <ScrollView
         ref={scrollRef}
         style={styles.flex}
-        contentContainerStyle={styles.conteudo}
+        contentContainerStyle={[
+          styles.conteudo,
+          tecladoAberto && styles.conteudoComTeclado,
+        ]}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
         showsVerticalScrollIndicator={false}
@@ -408,6 +418,7 @@ export default function ProdutoScreen() {
               limparErro("nome");
             }}
             erro={erros.nome}
+            onFocus={() => rolarPara("nome")}
             autoCapitalize="sentences"
             returnKeyType="next"
             onSubmitEditing={() => refCategoria.current?.focus()}
@@ -427,6 +438,7 @@ export default function ProdutoScreen() {
               limparErro("categoria");
             }}
             erro={erros.categoria}
+            onFocus={() => rolarPara("categoria")}
             autoCapitalize="sentences"
             returnKeyType="done"
             maxLength={30}
@@ -644,6 +656,7 @@ export default function ProdutoScreen() {
               placeholderTextColor={COLORS.textMuted}
               keyboardType="number-pad"
               selectTextOnFocus
+              onFocus={() => rolarPara("quantidade")}
               maxLength={6}
               selectionColor={COLORS.primaryLight}
               accessibilityLabel="Quantidade em estoque"
@@ -687,6 +700,7 @@ export default function ProdutoScreen() {
               limparErro("preco");
             }}
             erro={erros.preco}
+            onFocus={() => rolarPara("preco")}
             keyboardType="number-pad"
             maxLength={14}
           />
@@ -799,6 +813,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: GUTTER,
     paddingTop: 8,
     paddingBottom: 36,
+  },
+
+  // Espaço extra no fim enquanto o teclado está aberto, para os últimos
+  // campos poderem subir até o topo da área visível.
+  conteudoComTeclado: {
+    paddingBottom: 260,
   },
 
   secao: {
