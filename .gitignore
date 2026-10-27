@@ -42,3 +42,7 @@ app-example
 /ios
 /android
 .expo/
+
+.claude/
+CLAUDE.md
+AGENTS.md
