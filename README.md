@@ -26,9 +26,9 @@ Aplicativo mobile desenvolvido para gerenciamento de estoque de loja de roupas, 
 
 ### Tela Inicial
 
-(<p align="left">
-  <img src="screenshots/Inicio.jpeg.jpeg" width="220">
-  </p>)
+<p align="left">
+  <img src="screenshots/Inicio.jpeg." width="220">
+  </p>
 
   (<p align="left">
   <img src="screenshots/Inicio2.jpeg" width="220">
@@ -38,21 +38,21 @@ Aplicativo mobile desenvolvido para gerenciamento de estoque de loja de roupas, 
 
 ### Cadastro de Produtos
 
- (<p align="left">
+ <p align="left">
   <img src="screenshots/cadastrodeprodutos.jpeg" width="220">
-  </p>)
+  </p>
 
 ### Estoque
 
-(<p align="left">
+<p align="left">
   <img src="screenshots/estoque.jpeg" width="220">
-  </p>)
+  </p>
 
 ### Histórico
 
-(<p align="left">
+<p align="left">
   <img src="screenshots/historico.jpeg" width="220">
-  </p>)
+  </p>
 
 
 
