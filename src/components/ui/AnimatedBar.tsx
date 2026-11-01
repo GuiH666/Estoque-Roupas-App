@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, Animated, Easing, StyleSheet, View } from "react-native";
+import { AccessibilityInfo, Animated, Easing, View } from "react-native";
 import { COLORS } from "../../theme/colors";
+import { criarEstilos } from "../../theme/criarEstilos";
 
 type Props = {
   /** Valor de 0 a 1 */
@@ -71,9 +72,9 @@ export default function AnimatedBar({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   fundo: {
     backgroundColor: COLORS.surfaceRaised,
     overflow: "hidden",
   },
-});
+}));

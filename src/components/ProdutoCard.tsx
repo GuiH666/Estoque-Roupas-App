@@ -1,17 +1,17 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Produto } from "../types/Produto";
 import { COLORS } from "../theme/colors";
 import { TYPE } from "../theme/tokens";
-import { corParaHex } from "../utils/cores";
+import { corEhClara, corParaHex } from "../utils/cores";
 import { formatarMoeda } from "../utils/format";
 import { STATUS_INFO, statusDoEstoque } from "../utils/estoque";
 import { haptics } from "../utils/haptics";
 
-import Costura from "./ui/Costura";
 import PressableScale from "./ui/PressableScale";
+import { criarEstilos } from "../theme/criarEstilos";
 
 type Props = {
   produto: Produto;
@@ -34,6 +34,13 @@ export default function ProdutoCard({
   const hexCor = corParaHex(produto.cor);
   const temControles = !!(onEntrada || onSaida);
 
+  // Texto escuro sobre cores claras e claro sobre cores escuras
+  const corDoTexto = hexCor
+    ? corEhClara(hexCor)
+      ? "#111114"
+      : "#FFFFFF"
+    : COLORS.text;
+
   const tamanho = (produto.tamanho || "").trim();
   const tamanhoCurto = tamanho.length > 0 && tamanho.length <= 3;
 
@@ -50,14 +57,19 @@ export default function ProdutoCard({
       accessibilityLabel={`${produto.nome}, ${produto.quantidade} unidades`}
       style={styles.card}
     >
-      {/* Etiqueta com o tamanho */}
-      <View style={styles.etiqueta}>
-        <Costura raio={11} inset={3} />
-
+      {/* Bloco com a cor da peça e o tamanho em cima */}
+      <View
+        style={[
+          styles.etiqueta,
+          hexCor ? { backgroundColor: hexCor } : null,
+        ]}
+      >
         {tamanhoCurto ? (
-          <Text style={styles.etiquetaTexto}>{tamanho.toUpperCase()}</Text>
+          <Text style={[styles.etiquetaTexto, { color: corDoTexto }]}>
+            {tamanho.toUpperCase()}
+          </Text>
         ) : (
-          <Ionicons name="shirt-outline" size={22} color={COLORS.primaryLight} />
+          <Ionicons name="shirt" size={24} color={corDoTexto} />
         )}
       </View>
 
@@ -68,15 +80,6 @@ export default function ProdutoCard({
         </Text>
 
         <View style={styles.linha}>
-          {hexCor || produto.cor ? (
-            <View
-              style={[
-                styles.bolinha,
-                { backgroundColor: hexCor || COLORS.textMuted },
-              ]}
-            />
-          ) : null}
-
           <Text style={styles.detalhe} numberOfLines={1}>
             {[produto.cor, detalhes].filter(Boolean).join("  •  ") ||
               "Sem detalhes"}
@@ -119,7 +122,7 @@ export default function ProdutoCard({
             accessibilityRole="button"
             accessibilityLabel={`Retirar uma unidade de ${produto.nome}`}
           >
-            <Ionicons name="remove" size={18} color={COLORS.danger} />
+            <Ionicons name="remove" size={20} color={COLORS.danger} />
           </Pressable>
 
           <Text
@@ -139,12 +142,13 @@ export default function ProdutoCard({
             hitSlop={6}
             style={({ pressed }) => [
               styles.botaoStep,
+              styles.botaoMais,
               pressed && styles.botaoStepPressionado,
             ]}
             accessibilityRole="button"
             accessibilityLabel={`Adicionar uma unidade de ${produto.nome}`}
           >
-            <Ionicons name="add" size={18} color={COLORS.success} />
+            <Ionicons name="add" size={20} color={COLORS.onPrimary} />
           </Pressable>
         </View>
       ) : (
@@ -164,33 +168,32 @@ export default function ProdutoCard({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   card: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: COLORS.surface,
-    borderWidth: 1,
-    borderColor: COLORS.borderSoft,
-    borderRadius: 20,
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
+    borderRadius: 26,
     padding: 12,
-    marginBottom: 10,
-    gap: 10,
+    marginBottom: 12,
+    gap: 12,
   },
 
   etiqueta: {
-    width: 50,
-    height: 50,
-    borderRadius: 14,
+    width: 58,
+    height: 58,
+    borderRadius: 18,
     backgroundColor: COLORS.surfaceSecondary,
     alignItems: "center",
     justifyContent: "center",
   },
 
   etiquetaTexto: {
-    color: COLORS.text,
-    fontSize: 17,
-    fontWeight: "800",
-    letterSpacing: -0.3,
+    fontSize: 19,
+    fontWeight: "900",
+    letterSpacing: -0.4,
   },
 
   centro: {
@@ -200,20 +203,13 @@ const styles = StyleSheet.create({
 
   nome: {
     ...TYPE.bodyStrong,
+    fontWeight: "900",
   },
 
   linha: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-  },
-
-  bolinha: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.28)",
   },
 
   detalhe: {
@@ -223,42 +219,47 @@ const styles = StyleSheet.create({
 
   preco: {
     color: COLORS.thread,
-    fontSize: 14,
-    fontWeight: "800",
+    fontSize: 15,
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
 
   status: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 8,
+    paddingHorizontal: 9,
+    paddingVertical: 3,
+    borderRadius: 999,
   },
 
   statusTexto: {
     fontSize: 11,
-    fontWeight: "800",
+    fontWeight: "900",
+    letterSpacing: 0.2,
   },
 
   stepper: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: COLORS.background,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: COLORS.border,
     borderRadius: 999,
     padding: 3,
   },
 
   botaoStep: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     alignItems: "center",
     justifyContent: "center",
   },
 
+  botaoMais: {
+    backgroundColor: COLORS.primary,
+  },
+
   botaoStepPressionado: {
-    backgroundColor: COLORS.surfaceRaised,
+    opacity: 0.7,
   },
 
   botaoStepDesligado: {
@@ -266,11 +267,11 @@ const styles = StyleSheet.create({
   },
 
   qtd: {
-    minWidth: 24,
+    minWidth: 28,
     textAlign: "center",
     color: COLORS.text,
-    fontSize: 16,
-    fontWeight: "800",
+    fontSize: 17,
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
 
@@ -281,9 +282,9 @@ const styles = StyleSheet.create({
 
   qtdEstaticaNumero: {
     color: COLORS.text,
-    fontSize: 22,
-    fontWeight: "800",
-    letterSpacing: -0.5,
+    fontSize: 26,
+    fontWeight: "900",
+    letterSpacing: -0.8,
     fontVariant: ["tabular-nums"],
   },
 
@@ -291,4 +292,4 @@ const styles = StyleSheet.create({
     ...TYPE.small,
     fontSize: 11,
   },
-});
+}));

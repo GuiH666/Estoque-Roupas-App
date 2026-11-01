@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useRouter } from "expo-router";
 
@@ -29,6 +29,7 @@ import {
 } from "../../src/utils/format";
 import { STATUS_INFO, statusDoEstoque } from "../../src/utils/estoque";
 import { haptics } from "../../src/utils/haptics";
+import { criarEstilos } from "../../src/theme/criarEstilos";
 
 type Ranking = "pecas" | "valor";
 
@@ -343,7 +344,7 @@ export default function DashboardScreen() {
 
                     <AnimatedBar
                       proporcao={cat.pecas / maiorCategoria}
-                      cor={indice === 0 ? COLORS.primary : COLORS.primaryLight}
+                      cor={indice === 0 ? COLORS.primary : COLORS.accent}
                       atraso={indice * 90}
                     />
 
@@ -576,7 +577,7 @@ function Indicador({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   tela: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -600,8 +601,8 @@ const styles = StyleSheet.create({
   /* indicadores em um único painel */
   indicadores: {
     backgroundColor: COLORS.surface,
-    borderRadius: 24,
-    borderWidth: 1,
+    borderRadius: 30,
+    borderWidth: 1.5,
     borderColor: COLORS.border,
   },
 
@@ -644,7 +645,7 @@ const styles = StyleSheet.create({
   indicadorValor: {
     color: COLORS.text,
     fontSize: 24,
-    fontWeight: "800",
+    fontWeight: "900",
     letterSpacing: -0.7,
     marginTop: 8,
     fontVariant: ["tabular-nums"],
@@ -676,9 +677,9 @@ const styles = StyleSheet.create({
 
   cartao: {
     backgroundColor: COLORS.surface,
-    borderRadius: 22,
-    borderWidth: 1,
-    borderColor: COLORS.borderSoft,
+    borderRadius: 28,
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
     padding: 18,
   },
 
@@ -730,7 +731,7 @@ const styles = StyleSheet.create({
 
   valorBarra: {
     fontSize: 12,
-    fontWeight: "800",
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
 
@@ -786,7 +787,7 @@ const styles = StyleSheet.create({
   categoriaPecas: {
     color: COLORS.text,
     fontSize: 15,
-    fontWeight: "800",
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
 
@@ -815,8 +816,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     backgroundColor: COLORS.surface,
     borderRadius: 14,
-    borderWidth: 1,
-    borderColor: COLORS.borderSoft,
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
   },
 
   segmento: {
@@ -834,18 +835,18 @@ const styles = StyleSheet.create({
   segmentoTexto: {
     color: COLORS.textSecondary,
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: "900",
   },
 
   segmentoTextoAtivo: {
-    color: COLORS.white,
+    color: COLORS.onPrimary,
   },
 
   lista: {
     backgroundColor: COLORS.surface,
-    borderRadius: 22,
-    borderWidth: 1,
-    borderColor: COLORS.borderSoft,
+    borderRadius: 28,
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
     paddingHorizontal: 16,
   },
 
@@ -866,7 +867,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: COLORS.thread,
     fontSize: 18,
-    fontWeight: "800",
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
 
@@ -889,7 +890,7 @@ const styles = StyleSheet.create({
   linhaValor: {
     color: COLORS.text,
     fontSize: 15,
-    fontWeight: "800",
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
 
@@ -905,13 +906,13 @@ const styles = StyleSheet.create({
 
   pilulaNumero: {
     fontSize: 18,
-    fontWeight: "800",
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
 
   pilulaRotulo: {
     fontSize: 13,
-    fontWeight: "800",
+    fontWeight: "900",
   },
 
   tudoCerto: {
@@ -919,7 +920,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 12,
     padding: 16,
-    borderRadius: 18,
+    borderRadius: 22,
     backgroundColor: COLORS.successBackground,
   },
 
@@ -930,4 +931,4 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     lineHeight: 20,
   },
-});
+}));

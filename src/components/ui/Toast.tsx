@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Animated, StyleSheet, Text, View } from "react-native";
+import { Animated, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { COLORS } from "../../theme/colors";
-import { LIFT } from "../../theme/tokens";
+import { lift } from "../../theme/tokens";
+import { criarEstilos } from "../../theme/criarEstilos";
 
 type Tipo = "sucesso" | "erro";
 
@@ -76,13 +77,25 @@ export function useToast(bottom = 110) {
         { bottom, opacity: opacidade, transform: [{ translateY: deslocamento }] },
       ]}
     >
-      <View style={[styles.toast, LIFT]}>
+      <View
+        style={[
+          styles.toast,
+          lift(),
+          { backgroundColor: tipo === "sucesso" ? COLORS.primary : COLORS.danger },
+        ]}
+      >
         <Ionicons
           name={tipo === "sucesso" ? "checkmark-circle" : "alert-circle"}
-          size={20}
-          color={tipo === "sucesso" ? COLORS.success : COLORS.danger}
+          size={22}
+          color={tipo === "sucesso" ? COLORS.onPrimary : COLORS.white}
         />
-        <Text style={styles.texto} numberOfLines={2}>
+        <Text
+          style={[
+            styles.texto,
+            { color: tipo === "sucesso" ? COLORS.onPrimary : COLORS.white },
+          ]}
+          numberOfLines={2}
+        >
           {mensagem}
         </Text>
       </View>
@@ -92,7 +105,7 @@ export function useToast(bottom = 110) {
   return { toast, mostrar };
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   area: {
     position: "absolute",
     left: 20,
@@ -104,19 +117,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    backgroundColor: COLORS.surfaceRaised,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 13,
+    borderRadius: 20,
+    paddingHorizontal: 18,
+    paddingVertical: 14,
     maxWidth: 420,
   },
 
   texto: {
-    color: COLORS.text,
-    fontSize: 14,
-    fontWeight: "700",
+    fontSize: 15,
+    fontWeight: "800",
     flexShrink: 1,
   },
-});
+}));

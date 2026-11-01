@@ -1,14 +1,24 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import PressableScale from "./ui/PressableScale";
 import { COLORS } from "../theme/colors";
-import { GLOW } from "../theme/tokens";
+import { glow } from "../theme/tokens";
 import { haptics } from "../utils/haptics";
+import { criarEstilos } from "../theme/criarEstilos";
+
+/*
+ * O que a barra recebe do Expo Router (só o que ela usa).
+ * Declarado aqui porque, a partir do SDK 56, o app não pode mais importar
+ * de pacotes @react-navigation/* diretamente.
+ */
+type BottomTabBarProps = {
+  state: { index: number; routes: { key: string; name: string }[] };
+  navigation: any;
+};
 
 type Aba = {
   nome: string;
@@ -65,13 +75,13 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
           navigation.emit({ type: "tabLongPress", target: rota.key })
         }
       >
-        <View style={[styles.indicador, ativa && styles.indicadorAtivo]} />
-
-        <Ionicons
-          name={ativa ? aba.iconeAtivo : aba.icone}
-          size={23}
-          color={ativa ? COLORS.primaryLight : COLORS.textMuted}
-        />
+        <View style={[styles.indicador, ativa && styles.indicadorAtivo]}>
+          <Ionicons
+            name={ativa ? aba.iconeAtivo : aba.icone}
+            size={22}
+            color={ativa ? COLORS.onPrimary : COLORS.textMuted}
+          />
+        </View>
 
         <Text style={[styles.rotulo, ativa && styles.rotuloAtivo]}>
           {aba.rotulo}
@@ -81,14 +91,17 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
   }
 
   return (
-    <View style={[styles.barra, { paddingBottom: Math.max(insets.bottom, 10) }]}>
+    <View
+      style={[styles.moldura, { paddingBottom: Math.max(insets.bottom, 12) }]}
+    >
+    <View style={styles.barra}>
       {renderAba(ABAS[0])}
       {renderAba(ABAS[1])}
 
       <View style={styles.centro}>
         <PressableScale
           escala={0.9}
-          style={[styles.botaoCentral, GLOW]}
+          style={[styles.botaoCentral, glow()]}
           accessibilityRole="button"
           accessibilityLabel="Cadastrar novo produto"
           onPress={() => {
@@ -96,71 +109,82 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
             router.push("/produto");
           }}
         >
-          <Ionicons name="add" size={30} color={COLORS.white} />
+          <Ionicons name="add" size={32} color={COLORS.onPrimary} />
         </PressableScale>
       </View>
 
       {renderAba(ABAS[2])}
       {renderAba(ABAS[3])}
     </View>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
+  /* A barra flutua: uma cápsula com margem em volta, sobre o fundo da tela */
+  moldura: {
+    backgroundColor: COLORS.background,
+    paddingHorizontal: 12,
+    paddingTop: 8,
+  },
+
   barra: {
     flexDirection: "row",
-    alignItems: "flex-end",
+    alignItems: "center",
     backgroundColor: COLORS.surface,
-    borderTopWidth: 1,
-    borderTopColor: COLORS.borderSoft,
-    paddingTop: 6,
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
+    borderRadius: 34,
     paddingHorizontal: 6,
+    paddingVertical: 6,
   },
 
   aba: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-end",
-    height: 56,
-    gap: 3,
+    justifyContent: "center",
+    height: 60,
+    gap: 4,
   },
 
+  /* Pílula atrás do ícone: acende na aba ativa */
   indicador: {
-    position: "absolute",
-    top: 0,
-    width: 22,
-    height: 3,
-    borderRadius: 2,
+    width: 54,
+    height: 32,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "transparent",
   },
 
   indicadorAtivo: {
-    backgroundColor: COLORS.thread,
+    backgroundColor: COLORS.primary,
   },
 
   rotulo: {
     fontSize: 10.5,
-    fontWeight: "700",
+    fontWeight: "800",
+    letterSpacing: 0.1,
     color: COLORS.textMuted,
   },
 
   rotuloAtivo: {
-    color: COLORS.primaryLight,
+    color: COLORS.text,
   },
 
   centro: {
-    width: 64,
-    height: 56,
+    width: 70,
+    height: 60,
     alignItems: "center",
     justifyContent: "center",
   },
 
   botaoCentral: {
-    width: 56,
-    height: 56,
-    borderRadius: 20,
+    width: 58,
+    height: 58,
+    borderRadius: 22,
     backgroundColor: COLORS.primary,
     alignItems: "center",
     justifyContent: "center",
   },
-});
+}));

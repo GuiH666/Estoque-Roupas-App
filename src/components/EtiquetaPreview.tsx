@@ -1,11 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
-import Costura from "./ui/Costura";
 import { COLORS } from "../theme/colors";
 import { corParaHex } from "../utils/cores";
 import { formatarMoeda } from "../utils/format";
-import { STATUS_INFO, statusDoEstoque } from "../utils/estoque";
+import { criarEstilos } from "../theme/criarEstilos";
 
 type Props = {
   nome: string;
@@ -37,9 +36,6 @@ export default function EtiquetaPreview({
   const corLimpa = cor.trim();
   const hexCor = corParaHex(corLimpa);
 
-  const status = statusDoEstoque(quantidade);
-  const info = STATUS_INFO[status];
-
   return (
     <View
       style={styles.card}
@@ -48,8 +44,6 @@ export default function EtiquetaPreview({
         preco
       )}, ${quantidade} unidades`}
     >
-      <Costura raio={18} inset={6} />
-
       {/* Lado principal */}
       <View style={styles.principal}>
         <Text
@@ -113,10 +107,8 @@ export default function EtiquetaPreview({
           {formatarMoeda(preco)}
         </Text>
 
-        <View style={[styles.qtd, { backgroundColor: info.fundo }]}>
-          <Text style={[styles.qtdTexto, { color: info.cor }]}>
-            {quantidade} un.
-          </Text>
+        <View style={styles.qtd}>
+          <Text style={styles.qtdTexto}>{quantidade} un.</Text>
         </View>
       </View>
 
@@ -139,14 +131,14 @@ export default function EtiquetaPreview({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   card: {
     flexDirection: "row",
     backgroundColor: COLORS.surface,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: COLORS.border,
-    borderRadius: 24,
-    minHeight: 138,
+    borderRadius: 28,
+    minHeight: 144,
   },
 
   principal: {
@@ -159,9 +151,9 @@ const styles = StyleSheet.create({
 
   nome: {
     color: COLORS.text,
-    fontSize: 21,
-    fontWeight: "800",
-    letterSpacing: -0.5,
+    fontSize: 23,
+    fontWeight: "900",
+    letterSpacing: -0.8,
   },
 
   categoria: {
@@ -188,8 +180,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 6,
     paddingHorizontal: 10,
-    height: 28,
-    borderRadius: 9,
+    height: 30,
+    borderRadius: 15,
     backgroundColor: COLORS.surfaceRaised,
     maxWidth: 140,
   },
@@ -203,7 +195,7 @@ const styles = StyleSheet.create({
   tagTexto: {
     color: COLORS.text,
     fontSize: 13,
-    fontWeight: "700",
+    fontWeight: "800",
     flexShrink: 1,
   },
 
@@ -212,7 +204,7 @@ const styles = StyleSheet.create({
     height: 11,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.3)",
+    borderColor: COLORS.border,
   },
 
   picote: {
@@ -229,39 +221,48 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.border,
   },
 
+  /* O canhoto é um bloco de cor cheia, no estilo ingresso */
   canhoto: {
     width: LARGURA_CANHOTO,
     paddingHorizontal: 12,
     alignItems: "center",
     justifyContent: "center",
     gap: 4,
+    backgroundColor: COLORS.primary,
+    borderTopRightRadius: 26,
+    borderBottomRightRadius: 26,
   },
 
   canhotoRotulo: {
-    color: COLORS.textMuted,
+    color: COLORS.onPrimary,
+    opacity: 0.65,
     fontSize: 12,
-    fontWeight: "700",
+    fontWeight: "800",
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
   },
 
   preco: {
-    color: COLORS.thread,
-    fontSize: 23,
-    fontWeight: "800",
-    letterSpacing: -0.6,
+    color: COLORS.onPrimary,
+    fontSize: 25,
+    fontWeight: "900",
+    letterSpacing: -0.8,
     fontVariant: ["tabular-nums"],
     maxWidth: "100%",
   },
 
   qtd: {
     marginTop: 6,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 9,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 999,
+    backgroundColor: COLORS.onPrimary,
   },
 
   qtdTexto: {
+    color: COLORS.primary,
     fontSize: 13,
-    fontWeight: "800",
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
 
@@ -272,4 +273,4 @@ const styles = StyleSheet.create({
     borderRadius: TAMANHO_RECORTE / 2,
     backgroundColor: COLORS.background,
   },
-});
+}));

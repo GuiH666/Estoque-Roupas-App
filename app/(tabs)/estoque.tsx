@@ -9,7 +9,6 @@ import {
   Keyboard,
   ScrollView,
   SectionList,
-  StyleSheet,
   Text,
   TextInput,
   View,
@@ -45,6 +44,7 @@ import { formatarInteiro } from "../../src/utils/format";
 import { statusDoEstoque } from "../../src/utils/estoque";
 import { avisos } from "../../src/utils/avisos";
 import { haptics } from "../../src/utils/haptics";
+import { criarEstilos } from "../../src/theme/criarEstilos";
 
 const TODAS = "Todas";
 
@@ -271,7 +271,7 @@ export default function EstoqueScreen() {
                     contagem={totalBaixo}
                     ativo={soBaixo}
                     tom={COLORS.thread}
-                    tomTexto="#2A1E05"
+                    tomTexto={COLORS.esquema === "escuro" ? "#2A1E05" : COLORS.white}
                     onPress={() => setSoBaixo((v) => !v)}
                   />
 
@@ -367,7 +367,7 @@ export default function EstoqueScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   tela: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -391,9 +391,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     backgroundColor: COLORS.surface,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: COLORS.border,
-    borderRadius: 16,
+    borderRadius: 20,
     paddingHorizontal: 16,
   },
 
@@ -459,4 +459,4 @@ const styles = StyleSheet.create({
   item: {
     paddingHorizontal: GUTTER,
   },
-});
+}));

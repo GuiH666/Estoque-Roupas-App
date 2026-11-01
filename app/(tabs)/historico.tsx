@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { SectionList, StyleSheet, Text, View } from "react-native";
+import { SectionList, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useRouter } from "expo-router";
 
@@ -22,6 +22,7 @@ import {
   rotuloDoDia,
 } from "../../src/utils/format";
 import { haptics } from "../../src/utils/haptics";
+import { criarEstilos } from "../../src/theme/criarEstilos";
 
 type Filtro = "todos" | "entrada" | "saida";
 
@@ -344,7 +345,7 @@ export default function HistoricoScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   tela: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -366,8 +367,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: COLORS.surface,
-    borderRadius: 22,
-    borderWidth: 1,
+    borderRadius: 28,
+    borderWidth: 1.5,
     borderColor: COLORS.border,
     paddingVertical: 18,
     paddingHorizontal: 18,
@@ -394,7 +395,7 @@ const styles = StyleSheet.create({
 
   resumoNumero: {
     fontSize: 24,
-    fontWeight: "800",
+    fontWeight: "900",
     letterSpacing: -0.6,
     fontVariant: ["tabular-nums"],
   },
@@ -419,9 +420,9 @@ const styles = StyleSheet.create({
     padding: 4,
     gap: 4,
     backgroundColor: COLORS.surface,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: COLORS.borderSoft,
+    borderRadius: 20,
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
   },
 
   segmento: {
@@ -441,11 +442,11 @@ const styles = StyleSheet.create({
   segmentoTexto: {
     color: COLORS.textSecondary,
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: "900",
   },
 
   segmentoTextoAtivo: {
-    color: COLORS.white,
+    color: COLORS.onPrimary,
   },
 
   segmentoContagem: {
@@ -456,7 +457,8 @@ const styles = StyleSheet.create({
   },
 
   segmentoContagemAtiva: {
-    color: "rgba(255,255,255,0.75)",
+    color: COLORS.onPrimary,
+    opacity: 0.75,
   },
 
   /* dias */
@@ -481,7 +483,7 @@ const styles = StyleSheet.create({
 
   saldo: {
     fontSize: 14,
-    fontWeight: "800",
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
 
@@ -542,7 +544,7 @@ const styles = StyleSheet.create({
 
   linhaQtd: {
     fontSize: 18,
-    fontWeight: "800",
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
-});
+}));

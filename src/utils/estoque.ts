@@ -11,23 +11,39 @@ export function statusDoEstoque(quantidade: number): StatusEstoque {
   return "ok";
 }
 
+/*
+ * As cores são lidas na hora do uso (get), e não ao carregar o arquivo,
+ * para acompanhar o tema claro ou escuro que estiver valendo.
+ */
 export const STATUS_INFO: Record<
   StatusEstoque,
   { rotulo: string; cor: string; fundo: string }
 > = {
   ok: {
     rotulo: "Em dia",
-    cor: COLORS.success,
-    fundo: COLORS.successBackground,
+    get cor() {
+      return COLORS.success;
+    },
+    get fundo() {
+      return COLORS.successBackground;
+    },
   },
   baixo: {
     rotulo: "Baixo",
-    cor: COLORS.warning,
-    fundo: COLORS.warningBackground,
+    get cor() {
+      return COLORS.warning;
+    },
+    get fundo() {
+      return COLORS.warningBackground;
+    },
   },
   zerado: {
     rotulo: "Zerado",
-    cor: COLORS.danger,
-    fundo: COLORS.dangerBackground,
+    get cor() {
+      return COLORS.danger;
+    },
+    get fundo() {
+      return COLORS.dangerBackground;
+    },
   },
 };

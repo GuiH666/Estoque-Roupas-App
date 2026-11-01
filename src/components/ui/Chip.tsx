@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import PressableScale from "./PressableScale";
 import { COLORS } from "../../theme/colors";
 import { haptics } from "../../utils/haptics";
+import { criarEstilos } from "../../theme/criarEstilos";
 
 type Props = {
   rotulo: string;
@@ -13,9 +14,9 @@ type Props = {
   icone?: keyof typeof Ionicons.glyphMap;
   /** Número pequeno ao lado do texto (ex.: quantidade de itens) */
   contagem?: number;
-  /** Cor do chip quando ativo (padrão: azul da marca) */
+  /** Cor do chip quando ativo (padrão: cor principal da marca) */
   tom?: string;
-  /** Cor do texto quando ativo (padrão: branco) */
+  /** Cor do texto quando ativo (padrão: a cor que contrasta com o botão principal) */
   tomTexto?: string;
   /** Bolinha de cor antes do texto */
   bolinha?: string;
@@ -28,7 +29,7 @@ export default function Chip({
   icone,
   contagem,
   tom = COLORS.primary,
-  tomTexto = COLORS.white,
+  tomTexto = COLORS.onPrimary,
   bolinha,
 }: Props) {
   const corTexto = ativo ? tomTexto : COLORS.textSecondary;
@@ -72,12 +73,12 @@ export default function Chip({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   chip: {
-    height: 38,
-    paddingHorizontal: 15,
+    height: 40,
+    paddingHorizontal: 16,
     borderRadius: 999,
-    borderWidth: 1,
+    borderWidth: 1.5,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
 
   texto: {
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: "800",
   },
 
   contagem: {
@@ -105,6 +106,6 @@ const styles = StyleSheet.create({
     height: 12,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.25)",
+    borderColor: COLORS.border,
   },
-});
+}));

@@ -1,7 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { COLORS } from "../../theme/colors";
 import { GUTTER, TYPE } from "../../theme/tokens";
+import { criarEstilos } from "../../theme/criarEstilos";
 
 type Props = {
   titulo: string;
@@ -39,7 +40,7 @@ export default function ScreenHeader({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   container: {
     flexDirection: "row",
     alignItems: "flex-end",
@@ -73,4 +74,4 @@ const styles = StyleSheet.create({
   direita: {
     paddingBottom: 4,
   },
-});
+}));

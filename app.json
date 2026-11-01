@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "estoqueroupasapp",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.guih666.EstoqueRoupasApp"
@@ -34,7 +34,7 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "dark": {
-            "backgroundColor": "#0A1020"
+            "backgroundColor": "#0B0B0E"
           }
         }
       ],

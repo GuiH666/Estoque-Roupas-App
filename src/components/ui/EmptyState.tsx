@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import Costura from "./Costura";
@@ -7,6 +7,7 @@ import PressableScale from "./PressableScale";
 import { COLORS } from "../../theme/colors";
 import { TYPE } from "../../theme/tokens";
 import { haptics } from "../../utils/haptics";
+import { criarEstilos } from "../../theme/criarEstilos";
 
 type Props = {
   icone: keyof typeof Ionicons.glyphMap;
@@ -80,7 +81,7 @@ export default function EmptyState({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   container: {
     alignItems: "center",
     paddingHorizontal: 32,
@@ -128,8 +129,8 @@ const styles = StyleSheet.create({
   },
 
   botaoTexto: {
-    color: COLORS.white,
+    color: COLORS.onPrimary,
     fontSize: 15,
-    fontWeight: "800",
+    fontWeight: "900",
   },
-});
+}));

@@ -6,7 +6,6 @@ import {
   LayoutChangeEvent,
   Platform,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   View,
@@ -24,7 +23,7 @@ import {
 } from "../src/services/produtoService";
 
 import { COLORS } from "../src/theme/colors";
-import { GLOW, GUTTER, TYPE } from "../src/theme/tokens";
+import { glow, GUTTER, TYPE } from "../src/theme/tokens";
 import {
   CATEGORIAS_SUGERIDAS,
   CORES_PRESET,
@@ -46,6 +45,7 @@ import Chip from "../src/components/ui/Chip";
 import Field from "../src/components/ui/Field";
 import PressableScale from "../src/components/ui/PressableScale";
 import { useToast } from "../src/components/ui/Toast";
+import { criarEstilos } from "../src/theme/criarEstilos";
 
 type CampoComErro = "nome" | "categoria" | "quantidade" | "preco";
 type Erros = Partial<Record<CampoComErro, string>>;
@@ -738,14 +738,14 @@ export default function ProdutoScreen() {
         ]}
       >
         <PressableScale
-          style={[styles.botaoPrincipal, GLOW]}
+          style={[styles.botaoPrincipal, glow()]}
           onPress={() => salvar(false)}
           accessibilityRole="button"
         >
           <Ionicons
             name={editando ? "checkmark-circle" : "add-circle"}
             size={22}
-            color={COLORS.white}
+            color={COLORS.onPrimary}
           />
           <Text style={styles.botaoPrincipalTexto}>
             {editando ? "Salvar alterações" : "Cadastrar produto"}
@@ -770,7 +770,7 @@ export default function ProdutoScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   tela: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -792,7 +792,7 @@ const styles = StyleSheet.create({
   botaoFechar: {
     width: 44,
     height: 44,
-    borderRadius: 22,
+    borderRadius: 28,
     backgroundColor: COLORS.surface,
     alignItems: "center",
     justifyContent: "center",
@@ -882,8 +882,8 @@ const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 21,
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.22)",
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -903,7 +903,7 @@ const styles = StyleSheet.create({
 
   amostraNomeAtivo: {
     color: COLORS.text,
-    fontWeight: "800",
+    fontWeight: "900",
   },
 
   /* quantidade */
@@ -913,7 +913,7 @@ const styles = StyleSheet.create({
     height: 66,
     marginTop: 8,
     backgroundColor: COLORS.surface,
-    borderRadius: 18,
+    borderRadius: 22,
     borderWidth: 1.5,
     borderColor: COLORS.border,
     padding: 6,
@@ -941,7 +941,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: COLORS.text,
     fontSize: 26,
-    fontWeight: "800",
+    fontWeight: "900",
     letterSpacing: -0.6,
     fontVariant: ["tabular-nums"],
     paddingVertical: 0,
@@ -972,14 +972,14 @@ const styles = StyleSheet.create({
 
   totalValor: {
     color: COLORS.thread,
-    fontWeight: "800",
+    fontWeight: "900",
   },
 
   /* excluir */
   botaoExcluir: {
     marginTop: 34,
     height: 52,
-    borderRadius: 16,
+    borderRadius: 20,
     backgroundColor: COLORS.dangerBackground,
     flexDirection: "row",
     alignItems: "center",
@@ -990,7 +990,7 @@ const styles = StyleSheet.create({
   botaoExcluirTexto: {
     color: COLORS.danger,
     fontSize: 15,
-    fontWeight: "800",
+    fontWeight: "900",
   },
 
   /* rodapé */
@@ -1003,8 +1003,8 @@ const styles = StyleSheet.create({
   },
 
   botaoPrincipal: {
-    height: 58,
-    borderRadius: 18,
+    height: 62,
+    borderRadius: 24,
     backgroundColor: COLORS.primary,
     flexDirection: "row",
     alignItems: "center",
@@ -1013,10 +1013,10 @@ const styles = StyleSheet.create({
   },
 
   botaoPrincipalTexto: {
-    color: COLORS.white,
-    fontSize: 16,
-    fontWeight: "800",
-    letterSpacing: -0.2,
+    color: COLORS.onPrimary,
+    fontSize: 17,
+    fontWeight: "900",
+    letterSpacing: -0.3,
   },
 
   botaoSecundario: {
@@ -1029,6 +1029,7 @@ const styles = StyleSheet.create({
   botaoSecundarioTexto: {
     color: COLORS.primaryLight,
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: "900",
+    textDecorationLine: "underline",
   },
-});
+}));

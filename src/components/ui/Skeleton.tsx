@@ -5,12 +5,12 @@ import {
   DimensionValue,
   Easing,
   StyleProp,
-  StyleSheet,
   View,
   ViewStyle,
 } from "react-native";
 
 import { COLORS } from "../../theme/colors";
+import { criarEstilos } from "../../theme/criarEstilos";
 
 type SkeletonProps = {
   largura?: DimensionValue;
@@ -129,7 +129,7 @@ export function SkeletonLista({ quantidade = 3 }: { quantidade?: number }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   lista: {
     gap: 12,
   },
@@ -152,4 +152,4 @@ const styles = StyleSheet.create({
   espaco: {
     marginTop: 8,
   },
-});
+}));

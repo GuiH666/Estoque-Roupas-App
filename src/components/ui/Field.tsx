@@ -1,6 +1,5 @@
 import React, { forwardRef, useState } from "react";
 import {
-  StyleSheet,
   Text,
   TextInput,
   TextInputProps,
@@ -8,6 +7,7 @@ import {
 } from "react-native";
 
 import { COLORS } from "../../theme/colors";
+import { criarEstilos } from "../../theme/criarEstilos";
 
 type Props = TextInputProps & {
   rotulo: string;
@@ -82,7 +82,7 @@ const Field = forwardRef<TextInput, Props>(function Field(
 
 export default Field;
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   container: {
     marginBottom: 6,
   },
@@ -95,9 +95,10 @@ const styles = StyleSheet.create({
   },
 
   rotulo: {
-    color: COLORS.textSecondary,
+    color: COLORS.text,
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: "800",
+    letterSpacing: -0.1,
   },
 
   dica: {
@@ -107,24 +108,24 @@ const styles = StyleSheet.create({
   },
 
   caixa: {
-    height: 54,
+    height: 56,
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: COLORS.surface,
-    borderRadius: 14,
+    borderRadius: 18,
     borderWidth: 1.5,
     borderColor: COLORS.border,
     paddingHorizontal: 16,
   },
 
   caixaGrande: {
-    height: 62,
-    borderRadius: 16,
+    height: 66,
+    borderRadius: 20,
   },
 
   caixaFocada: {
-    borderColor: COLORS.primary,
-    backgroundColor: COLORS.surfaceSecondary,
+    borderColor: COLORS.text,
+    backgroundColor: COLORS.surface,
   },
 
   caixaErro: {
@@ -146,20 +147,20 @@ const styles = StyleSheet.create({
     flex: 1,
     color: COLORS.text,
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "700",
     paddingVertical: 0,
   },
 
   inputGrande: {
-    fontSize: 19,
-    fontWeight: "700",
+    fontSize: 20,
+    fontWeight: "800",
     letterSpacing: -0.3,
   },
 
   erro: {
     color: COLORS.danger,
     fontSize: 13,
-    fontWeight: "600",
+    fontWeight: "700",
     marginTop: 6,
   },
-});
+}));

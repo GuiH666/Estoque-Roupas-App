@@ -2,7 +2,6 @@ import React, { useCallback, useMemo, useState } from "react";
 import {
   Alert,
   ScrollView,
-  StyleSheet,
   Text,
   View,
 } from "react-native";
@@ -21,7 +20,7 @@ import {
 import { listarMovimentacoes } from "../../src/services/movimentacaoService";
 
 import { COLORS } from "../../src/theme/colors";
-import { GLOW, GUTTER, TYPE } from "../../src/theme/tokens";
+import { glow, GUTTER, TYPE } from "../../src/theme/tokens";
 import {
   dataPorExtenso,
   formatarInteiro,
@@ -35,8 +34,8 @@ import { avisos } from "../../src/utils/avisos";
 import { haptics } from "../../src/utils/haptics";
 
 import ProdutoCard from "../../src/components/ProdutoCard";
-import Costura from "../../src/components/ui/Costura";
 import EmptyState from "../../src/components/ui/EmptyState";
+import BotaoTema from "../../src/components/ui/BotaoTema";
 import Entrada from "../../src/components/ui/Entrada";
 import ErrorState from "../../src/components/ui/ErrorState";
 import ValorAnimado from "../../src/components/ui/ValorAnimado";
@@ -45,6 +44,7 @@ import { useCarregar } from "../../src/hooks/useCarregar";
 import PressableScale from "../../src/components/ui/PressableScale";
 import ScreenHeader from "../../src/components/ui/ScreenHeader";
 import { useToast } from "../../src/components/ui/Toast";
+import { criarEstilos } from "../../src/theme/criarEstilos";
 
 function primeiraMaiuscula(texto: string) {
   return texto.charAt(0).toUpperCase() + texto.slice(1);
@@ -163,7 +163,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.tela}>
-      <StatusBar style="light" />
+      <StatusBar style={COLORS.statusBar} />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -172,6 +172,7 @@ export default function HomeScreen() {
         <ScreenHeader
           titulo={saudacao()}
           subtitulo={primeiraMaiuscula(dataPorExtenso())}
+          direita={<BotaoTema />}
         />
 
         {status === "carregando" ? (
@@ -199,8 +200,6 @@ export default function HomeScreen() {
             <Entrada atraso={0}>
             {/* Cartão principal */}
             <View style={styles.hero}>
-              <Costura raio={20} inset={8} />
-
               <Text style={styles.heroRotulo}>Valor em estoque</Text>
 
               <ValorAnimado
@@ -212,7 +211,31 @@ export default function HomeScreen() {
                 formato={formatarMoeda}
               />
 
-              {/* Saúde do estoque */}
+              <View style={styles.divisor} />
+
+              <View style={styles.numeros}>
+                <Numero
+                  valor={formatarInteiro(resumo.produtos)}
+                  rotulo="Produtos"
+                />
+                <View style={styles.numeroLinha} />
+                <Numero
+                  valor={formatarInteiro(resumo.pecas)}
+                  rotulo="Peças"
+                />
+                <View style={styles.numeroLinha} />
+                <Numero
+                  largo
+                  valor={formatarMoeda(resumo.precoMedio)}
+                  rotulo="Preço médio"
+                />
+              </View>
+            </View>
+
+            {/* Saúde do estoque */}
+            <View style={styles.saudeCard}>
+              <Text style={styles.saudeTitulo}>Saúde do estoque</Text>
+
               <View
                 style={styles.saude}
                 accessible
@@ -250,25 +273,6 @@ export default function HomeScreen() {
                 <Legenda cor={COLORS.danger} texto={`${resumo.zerado} zerado`} />
               </View>
 
-              <View style={styles.divisor} />
-
-              <View style={styles.numeros}>
-                <Numero
-                  valor={formatarInteiro(resumo.produtos)}
-                  rotulo="Produtos"
-                />
-                <View style={styles.numeroLinha} />
-                <Numero
-                  valor={formatarInteiro(resumo.pecas)}
-                  rotulo="Peças"
-                />
-                <View style={styles.numeroLinha} />
-                <Numero
-                  largo
-                  valor={formatarMoeda(resumo.precoMedio)}
-                  rotulo="Preço médio"
-                />
-              </View>
             </View>
 
             </Entrada>
@@ -283,7 +287,11 @@ export default function HomeScreen() {
                 accessibilityLabel="Ver produtos que precisam de reposição"
               >
                 <View style={styles.avisoIcone}>
-                  <Ionicons name="alert" size={20} color={COLORS.thread} />
+                  <Ionicons
+                    name="alert"
+                    size={20}
+                    color={COLORS.esquema === "escuro" ? "#111114" : COLORS.white}
+                  />
                 </View>
 
                 <View style={styles.avisoTextos}>
@@ -307,14 +315,14 @@ export default function HomeScreen() {
 
             {/* Ação principal */}
             <PressableScale
-              style={[styles.botaoPrincipal, GLOW]}
+              style={[styles.botaoPrincipal, glow()]}
               onPress={() => {
                 haptics.medio();
                 abrirCadastro();
               }}
               accessibilityRole="button"
             >
-              <Ionicons name="add-circle" size={23} color={COLORS.white} />
+              <Ionicons name="add-circle" size={25} color={COLORS.onPrimary} />
               <Text style={styles.botaoPrincipalTexto}>Cadastrar produto</Text>
             </PressableScale>
 
@@ -482,7 +490,7 @@ function SecaoTitulo({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   tela: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -503,42 +511,58 @@ const styles = StyleSheet.create({
     gap: 14,
   },
 
-  /* cartão principal */
+  /* cartão principal: bloco de cor cheia */
   hero: {
-    backgroundColor: COLORS.surface,
-    borderRadius: 28,
-    borderWidth: 1,
-    borderColor: COLORS.border,
+    backgroundColor: COLORS.heroBg,
+    borderRadius: 36,
     paddingHorizontal: 26,
-    paddingTop: 28,
+    paddingTop: 26,
     paddingBottom: 24,
   },
 
   heroRotulo: {
-    ...TYPE.body,
-    color: COLORS.textSecondary,
-    fontWeight: "600",
+    color: COLORS.heroTextSoft,
+    fontSize: 13,
+    fontWeight: "900",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
 
   heroValor: {
     ...TYPE.display,
-    color: COLORS.text,
+    fontSize: 52,
+    color: COLORS.heroText,
     marginTop: 6,
+  },
+
+  /* saúde do estoque */
+  saudeCard: {
+    marginTop: 12,
+    padding: 20,
+    borderRadius: 28,
+    backgroundColor: COLORS.surface,
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
+  },
+
+  saudeTitulo: {
+    ...TYPE.bodyStrong,
+    fontWeight: "900",
+    marginBottom: 14,
   },
 
   saude: {
     flexDirection: "row",
-    height: 8,
-    gap: 3,
-    marginTop: 22,
-    borderRadius: 4,
+    height: 12,
+    gap: 4,
+    borderRadius: 6,
     overflow: "hidden",
     backgroundColor: COLORS.surfaceRaised,
   },
 
   saudeSegmento: {
-    height: 8,
-    borderRadius: 4,
+    height: 12,
+    borderRadius: 6,
   },
 
   legenda: {
@@ -556,9 +580,9 @@ const styles = StyleSheet.create({
   },
 
   legendaPonto: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 9,
+    height: 9,
+    borderRadius: 5,
   },
 
   legendaTexto: {
@@ -568,11 +592,10 @@ const styles = StyleSheet.create({
   },
 
   divisor: {
-    height: 1,
-    backgroundColor: COLORS.border,
+    height: 1.5,
+    backgroundColor: COLORS.heroLine,
     marginTop: 22,
     marginBottom: 18,
-    opacity: 0.7,
   },
 
   numeros: {
@@ -590,25 +613,26 @@ const styles = StyleSheet.create({
   },
 
   numeroValor: {
-    color: COLORS.text,
-    fontSize: 19,
-    fontWeight: "800",
-    letterSpacing: -0.4,
+    color: COLORS.heroText,
+    fontSize: 22,
+    fontWeight: "900",
+    letterSpacing: -0.6,
     fontVariant: ["tabular-nums"],
     maxWidth: "100%",
   },
 
   numeroRotulo: {
-    ...TYPE.small,
+    color: COLORS.heroTextSoft,
+    fontSize: 12,
+    fontWeight: "800",
     marginTop: 2,
   },
 
   numeroLinha: {
-    width: 1,
-    height: 32,
-    backgroundColor: COLORS.border,
+    width: 1.5,
+    height: 34,
+    backgroundColor: COLORS.heroLine,
     marginHorizontal: 14,
-    opacity: 0.7,
   },
 
   /* aviso */
@@ -616,19 +640,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-    marginTop: 14,
+    marginTop: 12,
     padding: 14,
-    borderRadius: 18,
+    borderRadius: 26,
     backgroundColor: COLORS.warningBackground,
-    borderWidth: 1,
-    borderColor: "rgba(245, 181, 68, 0.22)",
+    borderWidth: 1.5,
+    borderColor: COLORS.threadSoft,
   },
 
   avisoIcone: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: "rgba(245, 181, 68, 0.16)",
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: COLORS.thread,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -640,7 +664,7 @@ const styles = StyleSheet.create({
   avisoTitulo: {
     color: COLORS.text,
     fontSize: 15,
-    fontWeight: "800",
+    fontWeight: "900",
     letterSpacing: -0.2,
   },
 
@@ -651,9 +675,9 @@ const styles = StyleSheet.create({
 
   /* botão */
   botaoPrincipal: {
-    height: 58,
-    marginTop: 14,
-    borderRadius: 18,
+    height: 62,
+    marginTop: 12,
+    borderRadius: 24,
     backgroundColor: COLORS.primary,
     flexDirection: "row",
     alignItems: "center",
@@ -662,10 +686,10 @@ const styles = StyleSheet.create({
   },
 
   botaoPrincipalTexto: {
-    color: COLORS.white,
-    fontSize: 16,
-    fontWeight: "800",
-    letterSpacing: -0.2,
+    color: COLORS.onPrimary,
+    fontSize: 17,
+    fontWeight: "900",
+    letterSpacing: -0.3,
   },
 
   /* seções */
@@ -686,15 +710,16 @@ const styles = StyleSheet.create({
   secaoAcao: {
     color: COLORS.primaryLight,
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: "900",
+    textDecorationLine: "underline",
   },
 
   /* movimentações */
   listaMov: {
     backgroundColor: COLORS.surface,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: COLORS.borderSoft,
+    borderRadius: 28,
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
     paddingHorizontal: 14,
   },
 
@@ -711,9 +736,9 @@ const styles = StyleSheet.create({
   },
 
   movIcone: {
-    width: 38,
-    height: 38,
-    borderRadius: 12,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -725,7 +750,7 @@ const styles = StyleSheet.create({
   movNome: {
     color: COLORS.text,
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: "800",
   },
 
   movQuando: {
@@ -735,15 +760,15 @@ const styles = StyleSheet.create({
   },
 
   movQtd: {
-    fontSize: 17,
-    fontWeight: "800",
+    fontSize: 18,
+    fontWeight: "900",
     fontVariant: ["tabular-nums"],
   },
 
   semMov: {
     padding: 18,
-    borderRadius: 18,
-    borderWidth: 1,
+    borderRadius: 24,
+    borderWidth: 1.5,
     borderStyle: "dashed",
     borderColor: COLORS.border,
   },
@@ -754,4 +779,4 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: "center",
   },
-});
+}));

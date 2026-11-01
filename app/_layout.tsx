@@ -8,29 +8,41 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
 import { COLORS } from "../src/theme/colors";
+import { TemaProvider, useTema } from "../src/theme/TemaProvider";
 
 export const unstable_settings = {
   anchor: "(tabs)",
 };
 
-/** Tema de navegação alinhado com as cores do app (evita "piscar" branco). */
-const TemaDoApp = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    primary: COLORS.primary,
-    background: COLORS.background,
-    card: COLORS.surface,
-    text: COLORS.text,
-    border: COLORS.borderSoft,
-    notification: COLORS.thread,
-  },
-};
+/** Tema de navegação alinhado com as cores do app (evita "piscar" de outra cor). */
+function temaDeNavegacao() {
+  const base = COLORS.esquema === "escuro" ? DarkTheme : DefaultTheme;
 
-export default function RootLayout() {
+  return {
+    ...base,
+    colors: {
+      ...base.colors,
+      primary: COLORS.primary,
+      background: COLORS.background,
+      card: COLORS.surface,
+      text: COLORS.text,
+      border: COLORS.borderSoft,
+      notification: COLORS.thread,
+    },
+  };
+}
+
+function Navegacao() {
+  const { esquema } = useTema();
+
   return (
-    <ThemeProvider value={TemaDoApp}>
+    <ThemeProvider value={temaDeNavegacao()}>
+      {/*
+        A chave faz as telas serem recriadas quando o tema muda,
+        e assim todas leem as cores do tema novo.
+      */}
       <Stack
+        key={esquema}
         screenOptions={{
           contentStyle: { backgroundColor: COLORS.background },
         }}
@@ -48,7 +60,15 @@ export default function RootLayout() {
         />
       </Stack>
 
-      <StatusBar style="light" />
+      <StatusBar style={COLORS.statusBar} />
     </ThemeProvider>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <TemaProvider>
+      <Navegacao />
+    </TemaProvider>
   );
 }

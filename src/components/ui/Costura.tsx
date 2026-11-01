@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, View, StyleProp, ViewStyle } from "react-native";
+import { View, StyleProp, ViewStyle } from "react-native";
 import { COLORS } from "../../theme/colors";
+import { criarEstilos } from "../../theme/criarEstilos";
 
 type Props = {
   /** Raio dos cantos da costura (normalmente o raio do cartão menos o inset) */
@@ -42,10 +43,10 @@ export default function Costura({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = criarEstilos(() => ({
   costura: {
     position: "absolute",
     borderWidth: 1.5,
     borderStyle: "dashed",
   },
-});
+}));
