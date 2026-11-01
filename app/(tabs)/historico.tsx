@@ -8,6 +8,9 @@ import { listarMovimentacoes } from "../../src/services/movimentacaoService";
 import { Movimentacao } from "../../src/types/Movimentacao";
 
 import EmptyState from "../../src/components/ui/EmptyState";
+import ErrorState from "../../src/components/ui/ErrorState";
+import { SkeletonLista } from "../../src/components/ui/Skeleton";
+import { useCarregar } from "../../src/hooks/useCarregar";
 import PressableScale from "../../src/components/ui/PressableScale";
 import ScreenHeader from "../../src/components/ui/ScreenHeader";
 
@@ -41,11 +44,17 @@ export default function HistoricoScreen() {
   const [movimentacoes, setMovimentacoes] = useState<Movimentacao[]>([]);
   const [filtro, setFiltro] = useState<Filtro>("todos");
 
+  const carregar = useCallback(() => {
+    criarTabela();
+    setMovimentacoes(listarMovimentacoes());
+  }, []);
+
+  const { status, erro, executar } = useCarregar(carregar);
+
   useFocusEffect(
     useCallback(() => {
-      criarTabela();
-      setMovimentacoes(listarMovimentacoes());
-    }, [])
+      executar();
+    }, [executar])
   );
 
   const totais = useMemo(() => {
@@ -119,7 +128,11 @@ export default function HistoricoScreen() {
             <ScreenHeader
               titulo="Histórico"
               subtitulo={
-                movimentacoes.length === 0
+                status === "carregando"
+                  ? "Carregando…"
+                  : status === "erro"
+                  ? "Não foi possível carregar"
+                  : movimentacoes.length === 0
                   ? "Nenhuma movimentação ainda"
                   : `${formatarInteiro(movimentacoes.length)} ${
                       movimentacoes.length === 1
@@ -129,6 +142,7 @@ export default function HistoricoScreen() {
               }
             />
 
+            {status === "ok" ? (
             <View style={styles.pad}>
               {/* Resumo */}
               <View style={styles.resumo}>
@@ -217,6 +231,7 @@ export default function HistoricoScreen() {
                 })}
               </View>
             </View>
+            ) : null}
           </View>
         }
         renderSectionHeader={({ section }) => (
@@ -296,7 +311,13 @@ export default function HistoricoScreen() {
           );
         }}
         ListEmptyComponent={
-          movimentacoes.length === 0 ? (
+          status === "carregando" ? (
+            <View style={styles.pad}>
+              <SkeletonLista quantidade={4} />
+            </View>
+          ) : status === "erro" ? (
+            <ErrorState detalhe={erro} onTentar={executar} />
+          ) : movimentacoes.length === 0 ? (
             <EmptyState
               icone="time-outline"
               titulo="Nenhuma movimentação"
@@ -331,6 +352,9 @@ const styles = StyleSheet.create({
 
   lista: {
     paddingBottom: 40,
+    width: "100%",
+    maxWidth: 640,
+    alignSelf: "center",
   },
 
   pad: {

@@ -11,6 +11,10 @@ import { Movimentacao } from "../../src/types/Movimentacao";
 
 import AnimatedBar from "../../src/components/ui/AnimatedBar";
 import EmptyState from "../../src/components/ui/EmptyState";
+import Entrada from "../../src/components/ui/Entrada";
+import ErrorState from "../../src/components/ui/ErrorState";
+import { SkeletonBloco, SkeletonLista } from "../../src/components/ui/Skeleton";
+import { useCarregar } from "../../src/hooks/useCarregar";
 import PressableScale from "../../src/components/ui/PressableScale";
 import ScreenHeader from "../../src/components/ui/ScreenHeader";
 
@@ -37,12 +41,18 @@ export default function DashboardScreen() {
   const [movimentacoes, setMovimentacoes] = useState<Movimentacao[]>([]);
   const [ranking, setRanking] = useState<Ranking>("pecas");
 
+  const carregar = useCallback(() => {
+    criarTabela();
+    setProdutos(buscarProdutos());
+    setMovimentacoes(listarMovimentacoes());
+  }, []);
+
+  const { status, erro, executar } = useCarregar(carregar);
+
   useFocusEffect(
     useCallback(() => {
-      criarTabela();
-      setProdutos(buscarProdutos());
-      setMovimentacoes(listarMovimentacoes());
-    }, [])
+      executar();
+    }, [executar])
   );
 
   function editar(produto: Produto) {
@@ -148,7 +158,17 @@ export default function DashboardScreen() {
           subtitulo="Como está o seu estoque, em números"
         />
 
-        {semProdutos ? (
+        {status === "carregando" ? (
+          <View style={[styles.pad, styles.carregando]}>
+            <SkeletonBloco altura={190} raio={24} />
+            <SkeletonBloco altura={240} raio={24} />
+            <SkeletonBloco altura={170} raio={24} />
+          </View>
+        ) : status === "erro" ? (
+          <View style={styles.pad}>
+            <ErrorState detalhe={erro} onTentar={executar} />
+          </View>
+        ) : semProdutos ? (
           <View style={styles.pad}>
             <EmptyState
               icone="stats-chart-outline"
@@ -160,6 +180,7 @@ export default function DashboardScreen() {
           </View>
         ) : (
           <View style={styles.pad}>
+            <Entrada atraso={0}>
             {/* Indicadores */}
             <View style={styles.indicadores}>
               <View style={styles.indicadorLinha}>
@@ -201,6 +222,9 @@ export default function DashboardScreen() {
               </View>
             </View>
 
+            </Entrada>
+
+            <Entrada atraso={70}>
             {/* Movimentação da semana */}
             <Titulo texto="Movimentação da semana" />
 
@@ -287,6 +311,9 @@ export default function DashboardScreen() {
               </View>
             </View>
 
+            </Entrada>
+
+            <Entrada atraso={140}>
             {/* Categorias */}
             <Titulo texto="Peças por categoria" />
 
@@ -338,6 +365,9 @@ export default function DashboardScreen() {
               ) : null}
             </View>
 
+            </Entrada>
+
+            <Entrada atraso={210}>
             {/* Ranking */}
             <Titulo texto="Maiores estoques" />
 
@@ -409,6 +439,9 @@ export default function DashboardScreen() {
               ))}
             </View>
 
+            </Entrada>
+
+            <Entrada atraso={280}>
             {/* Reposição */}
             <Titulo
               texto="Precisam de reposição"
@@ -475,6 +508,7 @@ export default function DashboardScreen() {
                 })}
               </View>
             )}
+            </Entrada>
           </View>
         )}
       </ScrollView>
@@ -550,10 +584,17 @@ const styles = StyleSheet.create({
 
   conteudo: {
     paddingBottom: 48,
+    width: "100%",
+    maxWidth: 640,
+    alignSelf: "center",
   },
 
   pad: {
     paddingHorizontal: GUTTER,
+  },
+
+  carregando: {
+    gap: 14,
   },
 
   /* indicadores em um único painel */

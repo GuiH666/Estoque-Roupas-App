@@ -27,7 +27,7 @@ export default function ScreenHeader({
       <View style={styles.textos}>
         {acima ? <Text style={styles.acima}>{acima}</Text> : null}
 
-        <Text style={styles.titulo} numberOfLines={1}>
+        <Text style={styles.titulo} numberOfLines={1} accessibilityRole="header">
           {titulo}
         </Text>
 

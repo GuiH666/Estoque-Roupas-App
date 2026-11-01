@@ -15,6 +15,10 @@ type Props = {
   /** Texto do botão (se não vier, não mostra botão) */
   acao?: string;
   onAcao?: () => void;
+  /** "erro" pinta o ícone e a costura de vermelho */
+  tom?: "padrao" | "erro";
+  /** Linha pequena extra (ex.: mensagem técnica de um erro) */
+  detalhe?: string;
 };
 
 /** Tela vazia: explica o que fazer em seguida, sem dramatizar. */
@@ -24,16 +28,40 @@ export default function EmptyState({
   texto,
   acao,
   onAcao,
+  tom = "padrao",
+  detalhe,
 }: Props) {
+  const erro = tom === "erro";
+
   return (
-    <View style={styles.container}>
-      <View style={styles.icone}>
-        <Costura raio={34} inset={5} />
-        <Ionicons name={icone} size={30} color={COLORS.thread} />
+    <View
+      style={styles.container}
+      accessibilityLiveRegion={erro ? "assertive" : "polite"}
+    >
+      <View
+        style={[styles.icone, erro && { backgroundColor: COLORS.dangerBackground }]}
+      >
+        <Costura
+          raio={34}
+          inset={5}
+          cor={erro ? "rgba(255, 107, 124, 0.4)" : undefined}
+        />
+        <Ionicons
+          name={icone}
+          size={30}
+          color={erro ? COLORS.danger : COLORS.thread}
+        />
       </View>
 
-      <Text style={styles.titulo}>{titulo}</Text>
+      <Text style={styles.titulo} accessibilityRole="header">
+        {titulo}
+      </Text>
       <Text style={styles.texto}>{texto}</Text>
+      {detalhe ? (
+        <Text style={styles.detalhe} numberOfLines={3} selectable>
+          {detalhe}
+        </Text>
+      ) : null}
 
       {acao && onAcao ? (
         <PressableScale
@@ -43,6 +71,7 @@ export default function EmptyState({
             onAcao();
           }}
           accessibilityRole="button"
+          accessibilityLabel={acao}
         >
           <Text style={styles.botaoTexto}>{acao}</Text>
         </PressableScale>
@@ -79,6 +108,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 6,
     lineHeight: 21,
+  },
+
+  detalhe: {
+    ...TYPE.small,
+    color: COLORS.textMuted,
+    textAlign: "center",
+    marginTop: 10,
   },
 
   botao: {

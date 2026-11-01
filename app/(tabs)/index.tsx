@@ -37,6 +37,11 @@ import { haptics } from "../../src/utils/haptics";
 import ProdutoCard from "../../src/components/ProdutoCard";
 import Costura from "../../src/components/ui/Costura";
 import EmptyState from "../../src/components/ui/EmptyState";
+import Entrada from "../../src/components/ui/Entrada";
+import ErrorState from "../../src/components/ui/ErrorState";
+import ValorAnimado from "../../src/components/ui/ValorAnimado";
+import { SkeletonBloco, SkeletonLista } from "../../src/components/ui/Skeleton";
+import { useCarregar } from "../../src/hooks/useCarregar";
 import PressableScale from "../../src/components/ui/PressableScale";
 import ScreenHeader from "../../src/components/ui/ScreenHeader";
 import { useToast } from "../../src/components/ui/Toast";
@@ -58,13 +63,15 @@ export default function HomeScreen() {
     setMovimentacoes(listarMovimentacoes());
   }, []);
 
+  const { status, erro, executar } = useCarregar(carregar);
+
   useFocusEffect(
     useCallback(() => {
-      carregar();
+      executar();
 
       const aviso = avisos.consumir();
       if (aviso) mostrar(aviso);
-    }, [carregar, mostrar])
+    }, [executar, mostrar])
   );
 
   /* ---------- Ações ---------- */
@@ -167,7 +174,17 @@ export default function HomeScreen() {
           subtitulo={primeiraMaiuscula(dataPorExtenso())}
         />
 
-        {vazio ? (
+        {status === "carregando" ? (
+          <View style={[styles.pad, styles.carregando]}>
+            <SkeletonBloco altura={250} raio={28} />
+            <SkeletonBloco altura={56} raio={18} />
+            <SkeletonLista quantidade={2} />
+          </View>
+        ) : status === "erro" ? (
+          <View style={styles.pad}>
+            <ErrorState detalhe={erro} onTentar={executar} />
+          </View>
+        ) : vazio ? (
           <View style={styles.pad}>
             <EmptyState
               icone="shirt-outline"
@@ -179,20 +196,21 @@ export default function HomeScreen() {
           </View>
         ) : (
           <View style={styles.pad}>
+            <Entrada atraso={0}>
             {/* Cartão principal */}
             <View style={styles.hero}>
               <Costura raio={20} inset={8} />
 
               <Text style={styles.heroRotulo}>Valor em estoque</Text>
 
-              <Text
+              <ValorAnimado
                 style={styles.heroValor}
                 numberOfLines={1}
                 adjustsFontSizeToFit
                 minimumFontScale={0.6}
-              >
-                {formatarMoeda(resumo.valor)}
-              </Text>
+                valor={resumo.valor}
+                formato={formatarMoeda}
+              />
 
               {/* Saúde do estoque */}
               <View
@@ -253,6 +271,9 @@ export default function HomeScreen() {
               </View>
             </View>
 
+            </Entrada>
+
+            <Entrada atraso={70}>
             {/* Aviso de reposição */}
             {resumo.precisamReposicao > 0 ? (
               <PressableScale
@@ -297,6 +318,9 @@ export default function HomeScreen() {
               <Text style={styles.botaoPrincipalTexto}>Cadastrar produto</Text>
             </PressableScale>
 
+            </Entrada>
+
+            <Entrada atraso={140}>
             {/* Últimos cadastros */}
             <SecaoTitulo
               titulo="Últimos cadastros"
@@ -314,6 +338,9 @@ export default function HomeScreen() {
               />
             ))}
 
+            </Entrada>
+
+            <Entrada atraso={210}>
             {/* Movimentações recentes */}
             <SecaoTitulo
               titulo="Movimentações"
@@ -383,6 +410,7 @@ export default function HomeScreen() {
                 })}
               </View>
             )}
+            </Entrada>
           </View>
         )}
       </ScrollView>
@@ -462,10 +490,17 @@ const styles = StyleSheet.create({
 
   conteudo: {
     paddingBottom: 48,
+    width: "100%",
+    maxWidth: 640,
+    alignSelf: "center",
   },
 
   pad: {
     paddingHorizontal: GUTTER,
+  },
+
+  carregando: {
+    gap: 14,
   },
 
   /* cartão principal */

@@ -32,6 +32,9 @@ import { Produto } from "../../src/types/Produto";
 import ProdutoCard from "../../src/components/ProdutoCard";
 import Chip from "../../src/components/ui/Chip";
 import EmptyState from "../../src/components/ui/EmptyState";
+import ErrorState from "../../src/components/ui/ErrorState";
+import { SkeletonLista } from "../../src/components/ui/Skeleton";
+import { useCarregar } from "../../src/hooks/useCarregar";
 import PressableScale from "../../src/components/ui/PressableScale";
 import ScreenHeader from "../../src/components/ui/ScreenHeader";
 import { useToast } from "../../src/components/ui/Toast";
@@ -60,13 +63,15 @@ export default function EstoqueScreen() {
     setProdutos(buscarProdutos());
   }, []);
 
+  const { status, erro, executar } = useCarregar(carregar);
+
   useFocusEffect(
     useCallback(() => {
-      carregar();
+      executar();
 
       const aviso = avisos.consumir();
       if (aviso) mostrar(aviso);
-    }, [carregar, mostrar])
+    }, [executar, mostrar])
   );
 
   // Vindo do aviso da tela inicial: abre já filtrando o que está acabando
@@ -199,7 +204,11 @@ export default function EstoqueScreen() {
             <ScreenHeader
               titulo="Estoque"
               subtitulo={
-                produtos.length === 0
+                status === "carregando"
+                  ? "Carregando…"
+                  : status === "erro"
+                  ? "Não foi possível carregar"
+                  : produtos.length === 0
                   ? "Nenhum produto cadastrado"
                   : `${formatarInteiro(produtos.length)} ${
                       produtos.length === 1 ? "produto" : "produtos"
@@ -327,7 +336,13 @@ export default function EstoqueScreen() {
           </View>
         )}
         ListEmptyComponent={
-          produtos.length === 0 ? (
+          status === "carregando" ? (
+            <View style={styles.item}>
+              <SkeletonLista quantidade={4} />
+            </View>
+          ) : status === "erro" ? (
+            <ErrorState detalhe={erro} onTentar={executar} />
+          ) : produtos.length === 0 ? (
             <EmptyState
               icone="cube-outline"
               titulo="Nenhum produto ainda"
@@ -360,6 +375,9 @@ const styles = StyleSheet.create({
 
   lista: {
     paddingBottom: 40,
+    width: "100%",
+    maxWidth: 640,
+    alignSelf: "center",
   },
 
   /* busca */
