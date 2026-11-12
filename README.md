@@ -6,14 +6,25 @@ Aplicativo mobile para controle de estoque de uma loja de roupas, feito com Reac
 
 <table align="center">
   <tr>
-    <td align="center"><b>Início</b><br /><br /><img src="screenshots/Inicio.jpeg" width="250" /></td>
-    <td align="center"><b>Cadastro de produto</b><br /><br /><img src="screenshots/cadastrodeprodutos.jpeg" width="250" /></td>
-    <td align="center"><b>Estoque</b><br /><br /><img src="screenshots/estoque.jpeg" width="250" /></td>
+    <td align="center"><b>Início</b><br /><br /><img src="screenshots/inicio.jpg" width="250" /></td>
+    <td align="center"><b>Cadastro de produto</b><br /><br /><img src="screenshots/cadastro.jpg" width="250" /></td>
+    <td align="center"><b>Estoque</b><br /><br /><img src="screenshots/estoque.jpg" width="250" /></td>
   </tr>
   <tr>
-    <td align="center"><b>Histórico</b><br /><br /><img src="screenshots/historico.jpeg" width="250" /></td>
-    <td align="center"><b>Dashboard</b><br /><br /><img src="screenshots/dashboard.jpeg" width="250" /></td>
+    <td align="center"><b>Histórico</b><br /><br /><img src="screenshots/historico.jpg" width="250" /></td>
+    <td align="center"><b>Dashboard</b><br /><br /><img src="screenshots/dashboard.jpg" width="250" /></td>
     <td></td>
+  </tr>
+</table>
+
+### Tema claro e escuro
+
+O app tem os dois temas. Um botão na tela inicial alterna entre automático (segue o celular), claro e escuro, e a escolha fica salva no aparelho.
+
+<table align="center">
+  <tr>
+    <td align="center"><b>Escuro</b><br /><br /><img src="screenshots/inicio.jpg" width="250" /></td>
+    <td align="center"><b>Claro</b><br /><br /><img src="screenshots/inicio-claro.jpg" width="250" /></td>
   </tr>
 </table>
 
@@ -24,7 +35,9 @@ Aplicativo mobile para controle de estoque de uma loja de roupas, feito com Reac
 - **Estoque:** busca por nome, cor ou tamanho, filtro de estoque baixo, filtro por categoria e botões de +1 e −1 em cada produto.
 - **Histórico:** entradas e saídas agrupadas por dia, com filtro.
 - **Dashboard:** entradas e saídas dos últimos 7 dias, peças por categoria, maiores estoques por peças ou por valor e produtos que precisam de reposição.
-- Cadastro, edição e exclusão de produtos, com dados salvos localmente em SQLite.
+- **Tema claro e escuro**, com troca manual ou automática.
+- **Estados da interface:** carregamento, lista vazia e erro com botão "Tentar novamente".
+- **Acessibilidade:** respeita a opção "reduzir movimento" do sistema e tem rótulos para leitores de tela.
 
 ## Tecnologias
 
@@ -57,8 +70,9 @@ app/                telas e navegação (Expo Router)
 src/
   components/       componentes visuais (cartão de produto, barra de abas, etiqueta)
   database/         criação das tabelas e consultas SQLite
+  hooks/            hooks do app (carregamento dos dados)
   services/         regras de negócio (produtos e movimentações)
-  theme/            cores e medidas do visual
+  theme/            paletas clara e escura, tema e medidas do visual
   types/            tipos do TypeScript
   utils/            formatação, cores e funções de apoio
 screenshots/        imagens usadas neste README
