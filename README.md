@@ -7,26 +7,17 @@ Aplicativo mobile para controle de estoque de uma loja de roupas, feito com Reac
 <table align="center">
   <tr>
     <td align="center"><b>Início</b><br /><br /><img src="screenshots/inicio.jpg" width="250" /></td>
-    <td align="center"><b>Cadastro de produto</b><br /><br /><img src="screenshots/cadastro.jpg" width="250" /></td>
+    <td align="center"><b>Início (continuação)</b><br /><br /><img src="screenshots/inicio-2.jpg" width="250" /></td>
     <td align="center"><b>Estoque</b><br /><br /><img src="screenshots/estoque.jpg" width="250" /></td>
   </tr>
   <tr>
     <td align="center"><b>Histórico</b><br /><br /><img src="screenshots/historico.jpg" width="250" /></td>
     <td align="center"><b>Dashboard</b><br /><br /><img src="screenshots/dashboard.jpg" width="250" /></td>
-    <td></td>
+    <td align="center"><b>Dashboard (continuação)</b><br /><br /><img src="screenshots/dashboard-2.jpg" width="250" /></td>
   </tr>
 </table>
 
-### Tema claro e escuro
-
-O app tem os dois temas. Um botão na tela inicial alterna entre automático (segue o celular), claro e escuro, e a escolha fica salva no aparelho.
-
-<table align="center">
-  <tr>
-    <td align="center"><b>Escuro</b><br /><br /><img src="screenshots/inicio.jpg" width="250" /></td>
-    <td align="center"><b>Claro</b><br /><br /><img src="screenshots/inicio-claro.jpg" width="250" /></td>
-  </tr>
-</table>
+> Os prints acima estão no tema claro. O app também tem tema escuro.
 
 ## Funcionalidades
 
@@ -35,7 +26,7 @@ O app tem os dois temas. Um botão na tela inicial alterna entre automático (se
 - **Estoque:** busca por nome, cor ou tamanho, filtro de estoque baixo, filtro por categoria e botões de +1 e −1 em cada produto.
 - **Histórico:** entradas e saídas agrupadas por dia, com filtro.
 - **Dashboard:** entradas e saídas dos últimos 7 dias, peças por categoria, maiores estoques por peças ou por valor e produtos que precisam de reposição.
-- **Tema claro e escuro**, com troca manual ou automática.
+- **Tema claro e escuro:** um botão na tela inicial alterna entre automático (segue o celular), claro e escuro, e a escolha fica salva no aparelho.
 - **Estados da interface:** carregamento, lista vazia e erro com botão "Tentar novamente".
 - **Acessibilidade:** respeita a opção "reduzir movimento" do sistema e tem rótulos para leitores de tela.
 

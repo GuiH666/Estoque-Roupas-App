@@ -75,7 +75,10 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
           navigation.emit({ type: "tabLongPress", target: rota.key })
         }
       >
-        <View style={[styles.indicador, ativa && styles.indicadorAtivo]}>
+        <View
+          key={ativa ? "ativa" : "inativa"}
+          style={[styles.indicador, ativa && styles.indicadorAtivo]}
+        >
           <Ionicons
             name={ativa ? aba.iconeAtivo : aba.icone}
             size={22}
@@ -152,6 +155,7 @@ const styles = criarEstilos(() => ({
     width: 54,
     height: 32,
     borderRadius: 16,
+    overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "transparent",
