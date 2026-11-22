@@ -1,5 +1,7 @@
 # Estoque Roupas App
 
+[![CI](https://github.com/GuiH666/Estoque-Roupas-App/actions/workflows/ci.yml/badge.svg)](https://github.com/GuiH666/Estoque-Roupas-App/actions/workflows/ci.yml) ![Licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-blue)
+
 Aplicativo mobile para controle de estoque de uma loja de roupas, feito com React Native, Expo, TypeScript e SQLite. Funciona sem internet: os dados ficam guardados no próprio aparelho.
 
 ## Telas
@@ -46,6 +48,18 @@ npx expo start
 
 Depois, escaneie o QR code com o app Expo Go no celular.
 
+## Testes
+
+A regra de estoque (zerado, baixo e em dia) e os formatadores (moeda, centavos, datas das movimentações) têm testes automáticos com [Vitest](https://vitest.dev/):
+
+```bash
+npm test            # testes
+npm run typecheck   # TypeScript
+npm run lint        # ESLint
+```
+
+Os testes ficam em `src/utils/__tests__/` e o GitHub Actions roda os três comandos a cada push.
+
 ## Como gerar o APK
 
 ```bash
@@ -65,7 +79,8 @@ src/
   services/         regras de negócio (produtos e movimentações)
   theme/            paletas clara e escura, tema e medidas do visual
   types/            tipos do TypeScript
-  utils/            formatação, cores e funções de apoio
+  utils/            formatação, regra de estoque, cores e funções de apoio
+  utils/__tests__/  testes automáticos
 screenshots/        imagens usadas neste README
 ```
 

@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      # `npm install` porque o vitest entrou no package.json antes de o package-lock.json
+      # ser atualizado. Rode `npm install` localmente, commite o lock e troque por `npm ci`.
+      - run: npm install
+      - name: Testes
+        run: npm test
+      - name: Tipos (TypeScript)
+        run: npm run typecheck
+      - name: Lint
+        run: npx expo lint

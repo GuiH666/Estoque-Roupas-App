@@ -1,15 +1,9 @@
 import { COLORS } from "../theme/colors";
+import type { StatusEstoque } from "./regrasEstoque";
 
-/** Até esta quantidade o produto é considerado com estoque baixo. */
-export const LIMITE_ESTOQUE_BAIXO = 3;
-
-export type StatusEstoque = "ok" | "baixo" | "zerado";
-
-export function statusDoEstoque(quantidade: number): StatusEstoque {
-  if (quantidade <= 0) return "zerado";
-  if (quantidade <= LIMITE_ESTOQUE_BAIXO) return "baixo";
-  return "ok";
-}
+// A regra mora em regrasEstoque.ts; é reexportada aqui para os imports antigos continuarem valendo.
+export { LIMITE_ESTOQUE_BAIXO, statusDoEstoque } from "./regrasEstoque";
+export type { StatusEstoque } from "./regrasEstoque";
 
 /*
  * As cores são lidas na hora do uso (get), e não ao carregar o arquivo,
