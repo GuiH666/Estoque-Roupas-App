@@ -13,7 +13,7 @@ import AnimatedBar from "../../src/components/ui/AnimatedBar";
 import EmptyState from "../../src/components/ui/EmptyState";
 import Entrada from "../../src/components/ui/Entrada";
 import ErrorState from "../../src/components/ui/ErrorState";
-import { SkeletonBloco, SkeletonLista } from "../../src/components/ui/Skeleton";
+import { SkeletonBloco } from "../../src/components/ui/Skeleton";
 import { useCarregar } from "../../src/hooks/useCarregar";
 import PressableScale from "../../src/components/ui/PressableScale";
 import ScreenHeader from "../../src/components/ui/ScreenHeader";
